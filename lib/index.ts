@@ -1,4 +1,4 @@
-import type { LineString, FeatureCollection, Position } from "geojson";
+import type { LineString, Position } from "geojson";
 
 // https://github.com/mapbox/polyline/blob/master/src/polyline.js
 
@@ -125,19 +125,10 @@ export function geoJSONToPolyline(geojson: LineString) {
  *
  * @param str An encoded polyline as a string.
  */
-export function polylineToGeoJSON(str: string): FeatureCollection {
+export function polylineToGeoJSON(str: string): LineString {
   const coords = decode(str);
   return {
-    type: "FeatureCollection",
-    features: [
-      {
-        type: "Feature",
-        properties: null,
-        geometry: {
-          type: "LineString",
-          coordinates: coords,
-        },
-      },
-    ],
+    type: "LineString",
+    coordinates: coords,
   };
 }

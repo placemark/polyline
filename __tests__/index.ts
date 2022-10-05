@@ -1,4 +1,4 @@
-import type { Feature, LineString } from "geojson";
+import type { LineString } from "geojson";
 import * as polyline from "../lib/index";
 
 const example = [
@@ -6,11 +6,13 @@ const example = [
   [-120.95, 40.7],
   [-126.453, 43.252],
 ];
+
 const exampleWithZ = [
   [-120.2, 38.5, 0],
   [-120.95, 40.7, 0],
   [-126.453, 43.252, 0],
 ];
+
 // encoded value will enclude slashes -> tests escaping
 const example_slashes = [
   [-82.55, 35.6],
@@ -22,19 +24,16 @@ const example_rounding = [
   [0.000006, 0],
   [0.000002, 0],
 ];
+
 const example_rounding_negative = [
   [-112.084004, 36.05322],
   [-112.083914, 36.053573],
   [-112.083965, 36.053845],
 ];
 
-const geojson: Feature<LineString> = {
-  type: "Feature",
-  geometry: {
-    type: "LineString",
-    coordinates: example,
-  },
-  properties: {},
+const geojson: LineString = {
+  type: "LineString",
+  coordinates: example,
 };
 
 describe("#decode()", () => {
@@ -89,7 +88,7 @@ describe("#encode()", () => {
 
 describe("#fromGeoJSON()", () => {
   it("allows geojson geometries", () => {
-    expect(polyline.geoJSONToPolyline(geojson.geometry)).toEqual(
+    expect(polyline.geoJSONToPolyline(geojson)).toEqual(
       "_p~iF~ps|U_ulLnnqC_mqNvxq`@"
     );
   });
@@ -97,15 +96,8 @@ describe("#fromGeoJSON()", () => {
 
 describe("#toGeoJSON()", () => {
   it("flips coordinates and decodes geometry", () => {
-    expect(polyline.polylineToGeoJSON("_p~iF~ps|U_ulLnnqC_mqNvxq`@")).toEqual({
-      type: "FeatureCollection",
-      features: [
-        {
-          type: "Feature",
-          properties: null,
-          geometry: geojson.geometry,
-        },
-      ],
-    });
+    expect(polyline.polylineToGeoJSON("_p~iF~ps|U_ulLnnqC_mqNvxq`@")).toEqual(
+      geojson
+    );
   });
 });
