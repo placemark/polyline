@@ -9,4 +9,4 @@ Differences:
 - Written in TypeScript, with types provided.
 - No dependencies.
 
-## [📕 API Documentation](http://placemarkio.github.io/polyline)
+## [📕 API Documentation](https://placemark.github.io/polyline/)
