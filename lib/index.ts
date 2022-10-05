@@ -1,4 +1,4 @@
-import type { LineString, FeatureCollection } from "geojson";
+import type { LineString, FeatureCollection, Position } from "geojson";
 
 // https://github.com/mapbox/polyline/blob/master/src/polyline.js
 
@@ -33,8 +33,10 @@ function resultChange(result: number) {
   return result & 1 ? ~(result >> 1) : result >> 1;
 }
 
-// Decodes to a [latitude, longitude] coordinates array.
-export function decode(str: string) {
+/**
+ * Decodes to a [longitude, latitude] coordinates array.
+ */
+export function decode(str: string): Position {
   let index = 0;
   let lat = 0;
   let lng = 0;
@@ -77,13 +79,15 @@ export function decode(str: string) {
     lat += latitude_change;
     lng += longitude_change;
 
-    coordinates.push([lat / factor, lng / factor]);
+    coordinates.push([lng / factor, lat / factor]);
   }
 
   return coordinates;
 }
 
-// Encodes the given [latitude, longitude] coordinates array.
+/**
+ * Encodes the given [latitude, longitude] coordinates array.
+ */
 export function encode(coordinates: number[][]) {
   if (!coordinates.length) {
     return "";
@@ -91,33 +95,24 @@ export function encode(coordinates: number[][]) {
 
   const factor = Math.pow(10, 5);
   let output =
-    encodeNumber(coordinates[0][0], 0, factor) +
-    encodeNumber(coordinates[0][1], 0, factor);
+    encodeNumber(coordinates[0][1], 0, factor) +
+    encodeNumber(coordinates[0][0], 0, factor);
 
   for (let i = 1; i < coordinates.length; i++) {
     const a = coordinates[i];
     const b = coordinates[i - 1];
-    output += encodeNumber(a[0], b[0], factor);
     output += encodeNumber(a[1], b[1], factor);
+    output += encodeNumber(a[0], b[0], factor);
   }
 
   return output;
-}
-
-function flipped(coords: number[][]) {
-  const flipped = [];
-  for (let i = 0; i < coords.length; i++) {
-    const coord = coords[i].slice();
-    flipped.push([coord[1], coord[0]]);
-  }
-  return flipped;
 }
 
 /**
  * Encodes a GeoJSON LineString feature/geometry.
  */
 export function geoJSONToPolyline(geojson: LineString) {
-  return encode(flipped(geojson.coordinates));
+  return encode(geojson.coordinates);
 }
 
 /**
@@ -133,7 +128,7 @@ export function polylineToGeoJSON(str: string): FeatureCollection {
         properties: null,
         geometry: {
           type: "LineString",
-          coordinates: flipped(coords),
+          coordinates: coords,
         },
       },
     ],

@@ -8,5 +8,8 @@ Differences:
 
 - Written in TypeScript, with types provided.
 - No dependencies.
+- Always follows longitude, latitude order in all API endpoints.
+  polylines are, internally, latitude, longitude, but that is not
+  exposed to the user.
 
 ## [📕 API Documentation](https://placemark.github.io/polyline/)

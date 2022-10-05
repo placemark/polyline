@@ -2,41 +2,37 @@ import type { Feature, LineString } from "geojson";
 import * as polyline from "../lib/index";
 
 const example = [
-  [38.5, -120.2],
-  [40.7, -120.95],
-  [43.252, -126.453],
-];
-const exampleWithZ = [
-  [38.5, -120.2, 0],
-  [40.7, -120.95, 0],
-  [43.252, -126.453, 0],
-];
-// encoded value will enclude slashes -> tests escaping
-const example_slashes = [
-  [35.6, -82.55],
-  [35.59985, -82.55015],
-  [35.6, -82.55],
-];
-const example_flipped = [
   [-120.2, 38.5],
   [-120.95, 40.7],
   [-126.453, 43.252],
 ];
+const exampleWithZ = [
+  [-120.2, 38.5, 0],
+  [-120.95, 40.7, 0],
+  [-126.453, 43.252, 0],
+];
+// encoded value will enclude slashes -> tests escaping
+const example_slashes = [
+  [-82.55, 35.6],
+  [-82.55015, 35.59985],
+  [-82.55, 35.6],
+];
+
 const example_rounding = [
-  [0, 0.000006],
-  [0, 0.000002],
+  [0.000006, 0],
+  [0.000002, 0],
 ];
 const example_rounding_negative = [
-  [36.05322, -112.084004],
-  [36.053573, -112.083914],
-  [36.053845, -112.083965],
+  [-112.084004, 36.05322],
+  [-112.083914, 36.053573],
+  [-112.083965, 36.053845],
 ];
 
 const geojson: Feature<LineString> = {
   type: "Feature",
   geometry: {
     type: "LineString",
-    coordinates: example_flipped,
+    coordinates: example,
   },
   properties: {},
 };
