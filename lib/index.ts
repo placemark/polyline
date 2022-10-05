@@ -36,7 +36,7 @@ function resultChange(result: number) {
 /**
  * Decodes to a [longitude, latitude] coordinates array.
  */
-export function decode(str: string): Position {
+export function decode(str: string): Position[] {
   let index = 0;
   let lat = 0;
   let lng = 0;
@@ -87,6 +87,9 @@ export function decode(str: string): Position {
 
 /**
  * Encodes the given [latitude, longitude] coordinates array.
+ *
+ * @param coordinates Coordinates, in longitude, latitude order
+ * @returns encoded polyline
  */
 export function encode(coordinates: number[][]) {
   if (!coordinates.length) {
@@ -110,6 +113,8 @@ export function encode(coordinates: number[][]) {
 
 /**
  * Encodes a GeoJSON LineString feature/geometry.
+ *
+ * @param geojson A LineString
  */
 export function geoJSONToPolyline(geojson: LineString) {
   return encode(geojson.coordinates);
@@ -117,6 +122,8 @@ export function geoJSONToPolyline(geojson: LineString) {
 
 /**
  * Decodes to a GeoJSON LineString geometry.
+ *
+ * @param str An encoded polyline as a string.
  */
 export function polylineToGeoJSON(str: string): FeatureCollection {
   const coords = decode(str);
