@@ -34,11 +34,13 @@
   },
   "author": "Tom MacWright",
   "license": "MIT",
+  "dependencies": {
+    "@types/geojson": "*"
+  },
   "devDependencies": {
     "@rollup/plugin-typescript": "^8.5.0",
     "@swc/core": "^1.3.4",
     "@swc/jest": "^0.2.23",
-    "@types/geojson": "^7946.0.10",
     "@types/jest": "^29.1.1",
     "eslint": "^8.24.0",
     "husky": "^8.0.1",
