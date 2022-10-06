@@ -1,4 +1,10 @@
-# polyline
+# @placemarkio/polyline
+
+[![npm version](https://badge.fury.io/js/@placemarkio%2Fpolyline.svg)](https://badge.fury.io/js/@placemarkio%2Fpolyline)
+
+```
+@placemarkio/polyline
+```
 
 _polyline development is supported by 🌎 [placemark.io](https://placemark.io/)_
 
