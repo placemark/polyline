@@ -1,5 +1,7 @@
 import type { LineString, Position } from "geojson";
 
+const factor = 100000; // Math.pow(10, 5);
+
 // https://github.com/mapbox/polyline/blob/master/src/polyline.js
 
 // Based off of [the offical Google document](https://developers.google.com/maps/documentation/utilities/polylinealgorithm)
@@ -8,7 +10,8 @@ import type { LineString, Position } from "geojson";
 // by [Mark McClure](http://facstaff.unca.edu/mcmcclur/)
 
 function py2_round(value: number) {
-  // Google's polyline algorithm uses the same rounding strategy as Python 2, which is different from JS for negative values
+  // Google's polyline algorithm uses the same rounding strategy as Python 2,
+  // which is different from JS for negative values
   return Math.floor(Math.abs(value) + 0.5) * (value >= 0 ? 1 : -1);
 }
 
@@ -34,7 +37,11 @@ function resultChange(result: number) {
 }
 
 /**
- * Decodes to a [longitude, latitude] coordinates array.
+ * Decodes any string into a [longitude, latitude] coordinates array.
+ *
+ * Any string is a valid polyline, but if you provide this
+ * with an arbitrary string, it'll produce coordinates well
+ * outside of the normal range.
  */
 export function decode(str: string): Position[] {
   let index = 0;
@@ -44,7 +51,6 @@ export function decode(str: string): Position[] {
   let shift = 0;
   let result = 0;
   let byte = null;
-  const factor = Math.pow(10, 5);
 
   let latitude_change: number;
   let longitude_change: number;
@@ -96,7 +102,6 @@ export function encode(coordinates: number[][]) {
     return "";
   }
 
-  const factor = Math.pow(10, 5);
   let output =
     encodeNumber(coordinates[0][1], 0, factor) +
     encodeNumber(coordinates[0][0], 0, factor);

@@ -41,6 +41,13 @@ describe("#decode()", () => {
     expect(polyline.decode("")).toEqual([]);
   });
 
+  it("decodes any string, but coordinates will be weird", () => {
+    expect(polyline.decode("Hello, world!")).toEqual([
+      [70.84755, -0.00005],
+      [434.83615, -0.00006],
+    ]);
+  });
+
   it("decodes a String into an Array of lat/lon pairs", () => {
     expect(polyline.decode("_p~iF~ps|U_ulLnnqC_mqNvxq`@")).toEqual(example);
   });
