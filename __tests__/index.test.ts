@@ -1,3 +1,4 @@
+import { describe, expect, it } from "vitest";
 import type { LineString } from "geojson";
 import * as polyline from "../lib/index";
 
