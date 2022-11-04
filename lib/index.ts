@@ -41,10 +41,7 @@ function resultChange(result: number) {
  * with an arbitrary string, it'll produce coordinates well
  * outside of the normal range.
  */
-export function decode(str: string, precision?: number): Position[] {
-  if (typeof(precision) === 'undefined') {
-    precision = 5;
-  }
+export function decode(str: string, precision: number = 5): Position[] {
   const factor = Math.pow(10, precision);
   let index = 0;
   let lat = 0;
@@ -97,15 +94,11 @@ export function decode(str: string, precision?: number): Position[] {
  * Encodes the given [latitude, longitude] coordinates array.
  *
  * @param coordinates Coordinates, in longitude, latitude order
- * @param precision Defaults to 5
  * @returns encoded polyline
  */
-export function encode(coordinates: number[][], precision?: number) {
+export function encode(coordinates: number[][], precision: number = 5) {
   if (!coordinates.length) {
     return "";
-  }
-  if (typeof(precision) === 'undefined') {
-    precision = 5;
   }
   const factor = Math.pow(10, precision);
 
@@ -127,12 +120,8 @@ export function encode(coordinates: number[][], precision?: number) {
  * Encodes a GeoJSON LineString feature/geometry.
  *
  * @param geojson A LineString
- * @param precision Defaults to 5
  */
-export function geoJSONToPolyline(geojson: LineString, precision?: number) {
-  if (typeof(precision) === 'undefined') {
-    precision = 5;
-  }
+export function geoJSONToPolyline(geojson: LineString, precision: number = 5) {
   return encode(geojson.coordinates, precision);
 }
 
@@ -140,12 +129,8 @@ export function geoJSONToPolyline(geojson: LineString, precision?: number) {
  * Decodes to a GeoJSON LineString geometry.
  *
  * @param str An encoded polyline as a string.
- * @param precision Defaults to 5
  */
-export function polylineToGeoJSON(str: string, precision?: number): LineString {
-  if (typeof(precision) === 'undefined') {
-    precision = 5;
-  }
+export function polylineToGeoJSON(str: string, precision: number = 5): LineString {
   const coords = decode(str, precision);
   return {
     type: "LineString",
