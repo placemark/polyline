@@ -1,7 +1,5 @@
 import type { LineString, Position } from "geojson";
 
-const factor = 100000; // Math.pow(10, 5);
-
 // https://github.com/mapbox/polyline/blob/master/src/polyline.js
 
 // Based off of [the offical Google document](https://developers.google.com/maps/documentation/utilities/polylinealgorithm)
@@ -43,7 +41,8 @@ function resultChange(result: number) {
  * with an arbitrary string, it'll produce coordinates well
  * outside of the normal range.
  */
-export function decode(str: string): Position[] {
+export function decode(str: string, precision: number = 5): Position[] {
+  const factor = Math.pow(10, precision);
   let index = 0;
   let lat = 0;
   let lng = 0;
@@ -97,10 +96,11 @@ export function decode(str: string): Position[] {
  * @param coordinates Coordinates, in longitude, latitude order
  * @returns encoded polyline
  */
-export function encode(coordinates: number[][]) {
+export function encode(coordinates: number[][], precision: number = 5) {
   if (!coordinates.length) {
     return "";
   }
+  const factor = Math.pow(10, precision);
 
   let output =
     encodeNumber(coordinates[0][1], 0, factor) +
@@ -121,8 +121,8 @@ export function encode(coordinates: number[][]) {
  *
  * @param geojson A LineString
  */
-export function geoJSONToPolyline(geojson: LineString) {
-  return encode(geojson.coordinates);
+export function geoJSONToPolyline(geojson: LineString, precision: number = 5) {
+  return encode(geojson.coordinates, precision);
 }
 
 /**
@@ -130,8 +130,8 @@ export function geoJSONToPolyline(geojson: LineString) {
  *
  * @param str An encoded polyline as a string.
  */
-export function polylineToGeoJSON(str: string): LineString {
-  const coords = decode(str);
+export function polylineToGeoJSON(str: string, precision: number = 5): LineString {
+  const coords = decode(str, precision);
   return {
     type: "LineString",
     coordinates: coords,
