@@ -103,14 +103,14 @@ export function encode(coordinates: number[][], precision: number = 5) {
   const factor = Math.pow(10, precision);
 
   let output =
-    encodeNumber(coordinates[0][1], 0, factor) +
-    encodeNumber(coordinates[0][0], 0, factor);
+    encodeNumber(coordinates[0]![1]!, 0, factor) +
+    encodeNumber(coordinates[0]![0]!, 0, factor);
 
   for (let i = 1; i < coordinates.length; i++) {
-    const a = coordinates[i];
-    const b = coordinates[i - 1];
-    output += encodeNumber(a[1], b[1], factor);
-    output += encodeNumber(a[0], b[0], factor);
+    const a = coordinates[i]!;
+    const b = coordinates[i - 1]!;
+    output += encodeNumber(a[1]!, b[1]!, factor);
+    output += encodeNumber(a[0]!, b[0]!, factor);
   }
 
   return output;
@@ -130,7 +130,10 @@ export function geoJSONToPolyline(geojson: LineString, precision: number = 5) {
  *
  * @param str An encoded polyline as a string.
  */
-export function polylineToGeoJSON(str: string, precision: number = 5): LineString {
+export function polylineToGeoJSON(
+  str: string,
+  precision: number = 5,
+): LineString {
   const coords = decode(str, precision);
   return {
     type: "LineString",

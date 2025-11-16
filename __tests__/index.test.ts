@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import type { LineString } from "geojson";
-import * as polyline from "../lib/index";
+import * as polyline from "../src/index.js";
 
 const example = [
   [-120.2, 38.5],
@@ -72,20 +72,22 @@ describe("#decode()", () => {
   });
 
   it("decodes a String into an Array of lat/lon pairs with custom precision", () => {
-    expect(polyline.decode("_p~iF~ps|U_ulLnnqC_mqNvxq`@", 6)).toEqual(example_with_precision);
+    expect(polyline.decode("_p~iF~ps|U_ulLnnqC_mqNvxq`@", 6)).toEqual(
+      example_with_precision,
+    );
   });
 });
 
 describe("#identity", () => {
   it("feed encode into decode and check if the result is the same as the input", () => {
     expect(polyline.decode(polyline.encode(example_slashes))).toEqual(
-      example_slashes
+      example_slashes,
     );
   });
 
   it("feed decode into encode and check if the result is the same as the input", () => {
     expect(polyline.encode(polyline.decode("_chxEn`zvN\\\\]]"))).toEqual(
-      "_chxEn`zvN\\\\]]"
+      "_chxEn`zvN\\\\]]",
     );
   });
 });
@@ -100,18 +102,20 @@ describe("#encode()", () => {
   });
 
   it("encodes an Array of lat/lon pairs into a String with custom precision", () => {
-    expect(polyline.encode(example, 6)).toEqual("_izlhA~rlgdF_{geC~ywl@_kwzCn`{nI");
+    expect(polyline.encode(example, 6)).toEqual(
+      "_izlhA~rlgdF_{geC~ywl@_kwzCn`{nI",
+    );
   });
 
   it("encodes an Array of lat/lon/z into the same string as lat/lon", () => {
     expect(polyline.encode(exampleWithZ)).toEqual(
-      "_p~iF~ps|U_ulLnnqC_mqNvxq`@"
+      "_p~iF~ps|U_ulLnnqC_mqNvxq`@",
     );
   });
 
   it("encodes an Array of lat/lon/z into the same string as lat/lon with custom precision", () => {
     expect(polyline.encode(exampleWithZ, 6)).toEqual(
-      "_izlhA~rlgdF_{geC~ywl@_kwzCn`{nI"
+      "_izlhA~rlgdF_{geC~ywl@_kwzCn`{nI",
     );
   });
 
@@ -125,13 +129,13 @@ describe("#encode()", () => {
 
   it("encodes with proper negative rounding", () => {
     expect(polyline.encode(example_rounding_negative)).toEqual(
-      "ss`{E~kbkTeAQw@J"
+      "ss`{E~kbkTeAQw@J",
     );
   });
 
   it("encodes with proper negative rounding with custom precision", () => {
     expect(polyline.encode(example_rounding_negative, 6)).toEqual(
-      "gmowcAfaaxtEaUsD_PdB"
+      "gmowcAfaaxtEaUsD_PdB",
     );
   });
 });
@@ -139,13 +143,13 @@ describe("#encode()", () => {
 describe("#fromGeoJSON()", () => {
   it("allows geojson geometries", () => {
     expect(polyline.geoJSONToPolyline(geojson)).toEqual(
-      "_p~iF~ps|U_ulLnnqC_mqNvxq`@"
+      "_p~iF~ps|U_ulLnnqC_mqNvxq`@",
     );
   });
 
   it("allows geojson geometries with custom precision", () => {
     expect(polyline.geoJSONToPolyline(geojson, 6)).toEqual(
-      "_izlhA~rlgdF_{geC~ywl@_kwzCn`{nI"
+      "_izlhA~rlgdF_{geC~ywl@_kwzCn`{nI",
     );
   });
 });
@@ -153,13 +157,13 @@ describe("#fromGeoJSON()", () => {
 describe("#toGeoJSON()", () => {
   it("flips coordinates and decodes geometry", () => {
     expect(polyline.polylineToGeoJSON("_p~iF~ps|U_ulLnnqC_mqNvxq`@")).toEqual(
-      geojson
+      geojson,
     );
   });
 
   it("flips coordinates and decodes geometry with custom precision", () => {
-    expect(polyline.polylineToGeoJSON("_p~iF~ps|U_ulLnnqC_mqNvxq`@", 6)).toEqual(
-      geojson_with_precision
-    );
+    expect(
+      polyline.polylineToGeoJSON("_p~iF~ps|U_ulLnnqC_mqNvxq`@", 6),
+    ).toEqual(geojson_with_precision);
   });
 });
