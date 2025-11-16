@@ -24,6 +24,7 @@
 		"@types/geojson": "*"
 	},
 	"devDependencies": {
+		"@changesets/cli": "^2.29.7",
 		"husky": "^8.0.1",
 		"prettier": "^2.7.1",
 		"standard-version": "^9.5.0",
