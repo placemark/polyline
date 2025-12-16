@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.0.1
+
+### Patch Changes
+
+- 70dc7f7: Clean up dependencies, don't include biome
+
 ## 2.0.0
 
 ### Major Changes
