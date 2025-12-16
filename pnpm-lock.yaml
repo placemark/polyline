@@ -8,13 +8,13 @@ importers:
 
   .:
     dependencies:
-      '@biomejs/biome':
-        specifier: ^2.3.5
-        version: 2.3.5
       '@types/geojson':
         specifier: '*'
         version: 7946.0.16
     devDependencies:
+      '@biomejs/biome':
+        specifier: ^2.3.5
+        version: 2.3.5
       '@changesets/cli':
         specifier: ^2.29.7
         version: 2.29.7(@types/node@24.10.1)
