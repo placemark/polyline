@@ -7,9 +7,8 @@
 		"test:ci": "vitest run",
 		"lint": "biome check",
 		"doc": "typedoc --options ./typedoc.json",
-		"prepare": "zshy"
+		"prepare": "tsdown"
 	},
-	"zshy": "./src/index.ts",
 	"peerDependencies": {
 		"@types/geojson": "*"
 	},
@@ -31,7 +30,7 @@
 		"typedoc": "^0.23.15",
 		"typescript": "^5.9.3",
 		"vitest": "^4.0.15",
-		"zshy": "^0.4.4"
+		"tsdown": "^0.9.4"
 	},
 	"keywords": [
 		"polyline",
