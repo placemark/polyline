@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.0.2
+
+### Patch Changes
+
+- a7a264d: Fix types reference in package.json
+
 ## 2.0.1
 
 ### Patch Changes
