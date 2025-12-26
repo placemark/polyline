@@ -7,9 +7,8 @@
 		"test:ci": "vitest run",
 		"lint": "biome check",
 		"doc": "typedoc --options ./typedoc.json",
-		"prepare": "zshy"
+		"prepare": "tsdown"
 	},
-	"zshy": "./src/index.ts",
 	"peerDependencies": {
 		"@types/geojson": "*"
 	},
@@ -20,18 +19,16 @@
 	"author": "Tom MacWright",
 	"license": "MIT",
 	"dependencies": {
-		"@types/geojson": "*"
+		"@types/geojson": "^7946.0.16"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "^2.3.5",
+		"@biomejs/biome": "^2.3.10",
 		"@changesets/cli": "^2.29.8",
 		"husky": "^9.1.7",
-		"standard-version": "^9.5.0",
-		"tslib": "^2.4.0",
-		"typedoc": "^0.23.15",
+		"tsdown": "^0.18.3",
+		"typedoc": "^0.28.15",
 		"typescript": "^5.9.3",
-		"vitest": "^4.0.15",
-		"zshy": "^0.4.4"
+		"vitest": "^4.0.16"
 	},
 	"keywords": [
 		"polyline",
