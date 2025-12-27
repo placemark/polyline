@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.0.3
+
+### Patch Changes
+
+- 65cb7a8: Fix exports field in package.json
+
 ## 2.0.2
 
 ### Patch Changes
