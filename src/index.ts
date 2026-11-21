@@ -16,22 +16,23 @@ function py2_round(value: number) {
 function encodeNumber(current: number, previous: number, factor: number) {
 	current = py2_round(current * factor);
 	previous = py2_round(previous * factor);
-	let coordinate = current - previous;
-	coordinate <<= 1;
-	if (current - previous < 0) {
-		coordinate = ~coordinate;
+	// Use arithmetic instead of bitwise operators: those work on 32-bit
+	// integers and overflow for large values (e.g. a 360° step at precision 7)
+	let coordinate = (current - previous) * 2;
+	if (coordinate < 0) {
+		coordinate = -coordinate - 1;
 	}
 	let output = "";
 	while (coordinate >= 0x20) {
-		output += String.fromCharCode((0x20 | (coordinate & 0x1f)) + 63);
-		coordinate >>= 5;
+		output += String.fromCharCode((0x20 | (coordinate % 32)) + 63);
+		coordinate = Math.floor(coordinate / 32);
 	}
 	output += String.fromCharCode(coordinate + 63);
 	return output;
 }
 
 function resultChange(result: number) {
-	return result & 1 ? ~(result >> 1) : result >> 1;
+	return result % 2 === 1 ? (-result - 1) / 2 : result / 2;
 }
 
 /**
@@ -60,23 +61,24 @@ export function decode(str: string, precision: number = 5): Position[] {
 	while (index < str.length) {
 		// Reset shift, result, and byte
 		byte = null;
-		shift = 0;
+		shift = 1;
 		result = 0;
 
 		do {
 			byte = str.charCodeAt(index++) - 63;
-			result |= (byte & 0x1f) << shift;
-			shift += 5;
+			result += (byte & 0x1f) * shift;
+			shift *= 32;
 		} while (byte >= 0x20);
 
 		latitude_change = resultChange(result);
 
-		shift = result = 0;
+		shift = 1;
+		result = 0;
 
 		do {
 			byte = str.charCodeAt(index++) - 63;
-			result |= (byte & 0x1f) << shift;
-			shift += 5;
+			result += (byte & 0x1f) * shift;
+			shift *= 32;
 		} while (byte >= 0x20);
 
 		longitude_change = resultChange(result);

@@ -167,3 +167,23 @@ describe("#toGeoJSON()", () => {
 		).toEqual(geojson_with_precision);
 	});
 });
+
+describe("large values", () => {
+	it("encodes and decodes values beyond 32 bits with precision 7", () => {
+		expect(polyline.encode([[180, 0]], 7)).toEqual("?__hfhjB");
+		expect(
+			polyline.encode(
+				[
+					[-180, -90],
+					[180, 90],
+				],
+				7,
+			),
+		).toEqual("~nsrst@~~gfhjB__hfhjB__qmquE");
+		expect(polyline.decode("?__hfhjB", 7)).toEqual([[180, 0]]);
+		expect(polyline.decode("~nsrst@~~gfhjB__hfhjB__qmquE", 7)).toEqual([
+			[-180, -90],
+			[180, 90],
+		]);
+	});
+});
